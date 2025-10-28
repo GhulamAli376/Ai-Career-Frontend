@@ -1,0 +1,11 @@
+
+
+const apiEndPoint={
+    login:"/auth/login",
+    signUp:"/auth/signup",
+    otpVerification:"/auth/otp-verification",
+otpResend:"/auth/otp-resend",
+ generateAiCareer:"/user/generate-roadmap"
+} 
+
+export default apiEndPoint
