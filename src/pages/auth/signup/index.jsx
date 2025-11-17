@@ -1,39 +1,34 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, Paper } from "@mui/material";
 import Lottie from "lottie-react";
-import loginAnim from "../../../assets/Typing Animation.json";
+import signupAnim from "../../../assets/STUDENT.json";
 import { BASE_URL } from "../../../utilis";
 import apiEndPoint from "../../../constant/apiEndPoint";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Signup = () => {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${BASE_URL}${apiEndPoint.login}`, {
+      const response = await axios.post(`${BASE_URL}${apiEndPoint.signUp}`, {
+        fullName,
         email,
         password,
       });
+
       if (!response.data.status) throw new Error(response.data.message);
-console.log("response",response.data.data)
-delete response.data.data.password;
-
-Cookies.set("userData", JSON.stringify(response.data.data));
-
-
-      Cookies.set("token", response.data.token);
-      toast.success("Login successful!");
-      navigate("/");
+      toast.success("Signup successful! Please verify OTP.");
+      navigate("/otp-verification", { state: { email: email } });
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Login failed!");
+      toast.error(error?.response?.data?.message || "Signup failed!");
     } finally {
       setLoading(false);
     }
@@ -72,8 +67,7 @@ Cookies.set("userData", JSON.stringify(response.data.data));
             background: "rgba(255, 255, 255, 0.05)",
           }}
         >
-          <Lottie animationData={loginAnim} 
-          style={{ width: 350, height: 350 }} />
+          <Lottie animationData={signupAnim} style={{ width: 350, height: 350 }} />
         </Box>
 
         {/* Right Form */}
@@ -87,12 +81,22 @@ Cookies.set("userData", JSON.stringify(response.data.data));
           }}
         >
           <Typography variant="h4" fontWeight={600} mb={2} textAlign={"center"}>
-            Welcome Back
+            Create Account
           </Typography>
           <Typography variant="body1" mb={3} textAlign={"center"}>
-            Login to your AI Career account
+            Sign up and start your AI career journey!
           </Typography>
 
+          <TextField
+            label="Full Name"
+            variant="outlined"
+            fullWidth
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            sx={{ mb: 2 }}
+            InputProps={{ style: { color: "white" } }}
+            InputLabelProps={{ style: { color: "#ddd" } }}
+          />
           <TextField
             label="Email"
             variant="outlined"
@@ -117,7 +121,7 @@ Cookies.set("userData", JSON.stringify(response.data.data));
 
           <Button
             variant="contained"
-            onClick={handleLogin}
+            onClick={handleSignup}
             sx={{
               py: 1.5,
               fontSize: 16,
@@ -125,13 +129,13 @@ Cookies.set("userData", JSON.stringify(response.data.data));
               background: "linear-gradient(90deg, #6f86d6, #48c6ef)",
             }}
           >
-            {loading ? "Please wait..." : "Login"}
+            {loading ? "Please wait..." : "Sign Up"}
           </Button>
 
           <Typography mt={3} textAlign="center">
-            Don’t have an account?{" "}
-            <Button sx={{ color: "#90caf9" }} onClick={() => navigate("/signup")}>
-              Sign Up
+            Already have an account?{" "}
+            <Button sx={{ color: "#90caf9" }} onClick={() => navigate("/login")}>
+              Login
             </Button>
           </Typography>
         </Box>
@@ -140,4 +144,4 @@ Cookies.set("userData", JSON.stringify(response.data.data));
   );
 };
 
-export default Login;
+export default Signup;

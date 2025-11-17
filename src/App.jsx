@@ -6,7 +6,9 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/home'
 import Result from './pages/result'
 import { ToastContainer } from 'react-toastify'
-import AuthPage from './pages/auth/login'
+import Login from './pages/auth/login'
+import Signup from './pages/auth/signup'
+import OtpVerification from './pages/auth/otp'
 
 function App() {
  
@@ -26,10 +28,23 @@ function App() {
     <Route
           path="/login"
           element={
-              <AuthPage/>
+              <Login/>
           }
         />
 
+          <Route
+          path="/signup"
+          element={
+              <Signup/>
+          }
+        />
+
+<Route
+          path="/otp-verification"
+          element={
+              <OtpVerification/>
+          }
+        />
         <Route
           path="/pathfinder"
           element={
