@@ -50,16 +50,13 @@ export default function Navbar() {
           >
             Home
           </Button>
-          <Button
-            color="inherit"
-            onClick={() => navigate("/pathfinder")}
-            sx={{ textTransform: "none", fontWeight: "500" }}
-          >
-            Careers
-          </Button>
+          
 
           {!user && (
             <>
+
+           
+
               <Button
                 variant="contained"
                 color="secondary"
@@ -82,6 +79,21 @@ export default function Navbar() {
 
           {user && (
             <>
+             <Button
+            color="inherit"
+            onClick={() => navigate("/pathfinder")}
+            sx={{ textTransform: "none", fontWeight: "500" }}
+          >
+            Careers
+          </Button>
+
+          <Button
+            color="inherit"
+            onClick={() => navigate("/dashboard")}
+            sx={{ textTransform: "none", fontWeight: "500" }}
+          >
+            Dashboard
+          </Button>
               <IconButton
                 size="large"
                 edge="end"

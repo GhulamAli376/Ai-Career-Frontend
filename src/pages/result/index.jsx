@@ -2,18 +2,14 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
-  CircularProgress,
   Typography,
   TextField,
   Paper,
-  Divider,
   Container,
-  Fade,
 } from "@mui/material";
 import Navbar from "../../components/navBar";
-import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import downloadPDF from "../../components/downloadPDF/index.jsx"
+import downloadPDF from "../../components/downloadPDF/index.jsx";
 import Lottie from "lottie-react";
 import aiLoading from "../../assets/two-people-thinking.json";
 import { BASE_URL } from "../../utilis/index.js";
@@ -56,178 +52,143 @@ const Result = () => {
   };
 
   const formatRoadmap = (text) => {
-    const lines = text.split(/\n+/).filter((line) => line.trim() !== "");
-    return lines.map((line, index) => (
-      <Fade in={true} timeout={400 + index * 100} key={index}>
-        <Paper
-          elevation={4}
-          sx={{
-            p: 2.5,
-            mb: 2,
-            borderRadius: 3,
-            background:
-              index === 0
-                ? "linear-gradient(135deg, #1976d2, #42a5f5)"
-                : "#fafafa",
-            color: index === 0 ? "white" : "text.primary",
-            borderLeft: index !== 0 ? "5px solid #1976d2" : "none",
-            boxShadow:
-              index === 0
-                ? "0 4px 12px rgba(25,118,210,0.4)"
-                : "0 2px 8px rgba(0,0,0,0.08)",
-            transition: "transform 0.3s ease",
-            "&:hover": {
-              transform: "translateY(-3px)",
-            },
-          }}
-        >
-          <Typography
-            sx={{
-              fontWeight: index === 0 ? "bold" : 500,
-              fontSize: index === 0 ? "1.1rem" : "1rem",
-            }}
-          >
-            {line}
-          </Typography>
-        </Paper>
-      </Fade>
-    ));
+    const steps = text.split(/\n+/).filter((line) => line.trim() !== "");
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          mt: 4,
+        }}
+      >
+        {steps.map((step, index) => (
+          <Box key={index} sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+            <Paper
+              elevation={4}
+              sx={{
+                p: 3,
+                width: { xs: "90%", sm: "400px" },
+                minHeight: "80px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "15px",
+                background: "linear-gradient(135deg,#6a11cb,#2575fc)",
+                color: "#fff",
+                textAlign: "center",
+                wordBreak: "break-word",
+              }}
+            >
+              <Typography fontWeight="bold">{step}</Typography>
+            </Paper>
+
+            {/* Arrow */}
+            {index < steps.length - 1 && (
+              <Box
+                sx={{
+                  width: "2px",
+                  height: "40px",
+                  background: "linear-gradient(180deg,#6a11cb,#2575fc)",
+                  position: "relative",
+                  mx: "auto",
+                  "&:after": {
+                    content: '" "',
+                    position: "absolute",
+                    bottom: "-8px",
+                    left: "-8px",
+                    borderLeft: "10px solid transparent",
+                    borderRight: "10px solid transparent",
+                    borderTop: "10px solid #6a11cb",
+                  },
+                }}
+              />
+            )}
+          </Box>
+        ))}
+      </Box>
+    );
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        bgcolor: "linear-gradient(180deg, #e3f2fd, #ffffff)",
-        textAlign: "center",
-      }}
-    >
+    <Box sx={{ minHeight: "100vh", background: "linear-gradient(135deg,#dfe9f3 0%, #fff 100%)", pb: 6 }}>
       <Navbar />
 
-      <Container maxWidth="md" sx={{ py: 6 }}>
-        <Box sx={{ mb: 4 }}>
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 1,
-              mb: 1,
-            }}
-          >
-            <RocketLaunchIcon color="primary" fontSize="large" />
-            AI Career Roadmap Generator
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            Get your personalized learning roadmap in seconds 🚀
-          </Typography>
-        </Box>
-
-        {/* Input Card */}
-        <Paper
+      <Container maxWidth="md" sx={{ py: 6, textAlign: "center" }}>
+        <Typography
+          variant="h3"
+          fontWeight="800"
           sx={{
-            p: 4,
-            borderRadius: "25px",
-            boxShadow: "0 8px 25px rgba(0,0,0,0.1)",
-            background:
-              "linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%)",
+            background: "linear-gradient(90deg,#1e3c72,#2a5298)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            mb: 1,
           }}
         >
-          <TextField
-            fullWidth
-            label="Your Name"
-            name="name"
-            value={userDetails.name}
-            onChange={handleChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            fullWidth
-            label="Field of Interest (e.g. Web Dev, AI, Cybersecurity)"
-            name="field"
-            value={userDetails.field}
-            onChange={handleChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            fullWidth
-            label="Current Skill Level (Beginner, Intermediate, Expert)"
-            name="skillLevel"
-            value={userDetails.skillLevel}
-            onChange={handleChange}
-            sx={{ mb: 3 }}
-          />
+          Your AI-Powered Career Map
+        </Typography>
+        <Typography variant="subtitle1" sx={{ color: "#4f4f4f", fontSize: "1.1rem" }}>
+          Enter your details and watch AI craft a personalized journey for you ✨
+        </Typography>
+
+        {/* INPUT FORM */}
+        <Box sx={{ mt: 4 }}>
+          <TextField fullWidth label="Your Name" name="name" value={userDetails.name} onChange={handleChange} sx={{ mb: 2 }} />
+          <TextField fullWidth label="Field of Interest" name="field" value={userDetails.field} onChange={handleChange} sx={{ mb: 2 }} />
+          <TextField fullWidth label="Skill Level" name="skillLevel" value={userDetails.skillLevel} onChange={handleChange} sx={{ mb: 3 }} />
 
           <Button
             variant="contained"
-            color="primary"
             fullWidth
             onClick={generateRoadmap}
             disabled={loading}
             startIcon={<AutoAwesomeIcon />}
             sx={{
-              borderRadius: "30px",
-              py: 1.5,
+              py: 1.6,
+              borderRadius: "25px",
               fontWeight: "bold",
               fontSize: "1.05rem",
-              textTransform: "none",
-              boxShadow: "0 6px 15px rgba(25,118,210,0.4)",
-              "&:hover": {
-                transform: "scale(1.03)",
-                transition: "all 0.3s ease",
-              },
+              background: "linear-gradient(90deg,#4776E6,#8E54E9)",
+              boxShadow: "0 6px 18px rgba(142,84,233,0.45)",
+              "&:hover": { transform: "scale(1.03)", transition: "0.25s" },
             }}
           >
-            {loading ? "Generating..." : "Generate Roadmap"}
+            {loading ? "Generating..." : "Generate Career Roadmap"}
           </Button>
 
           {loading && (
-  <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
-    <Lottie
-      animationData={aiLoading}
-      loop={true}
-      style={{ width: 200, height: 200 }}
-    />
-  </Box>
-)}
-
-
-          {aiResponse && (
-            <Fade in={true} timeout={700}>
-              <Box sx={{ mt: 5, textAlign: "left" }} id="roadmap-content"> 
-                <Divider sx={{ mb: 2 }} />
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color="primary"
-                  gutterBottom
-                >
-                  🎯 Your Personalized Roadmap
-                </Typography>
-                {formatRoadmap(aiResponse)}
-                <Button
- onClick={() => downloadPDF(userDetails.field)}
-  variant="outlined"
-  sx={{ mt: 2, borderRadius: "20px" }}
->
-  📄 Download as PDF
-</Button>
-
-              </Box>
-            </Fade>
+            <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
+              <Lottie animationData={aiLoading} loop style={{ width: 180, height: 180 }} />
+            </Box>
           )}
-        </Paper>
-      </Container>
 
-      <style>
-        {`
-          body {
-            background: linear-gradient(180deg, #e3f2fd, #ffffff);
-          }
-        `}
-      </style>
+          {/* ROADMAP DISPLAY */}
+          {aiResponse && formatRoadmap(aiResponse)}
+
+          {/* DOWNLOAD BUTTON */}
+          {aiResponse && (
+            <Box textAlign="center" sx={{ mt: 4 }}>
+              <Button
+                onClick={() => downloadPDF(userDetails.field)}
+                variant="contained"
+                sx={{
+                  borderRadius: "25px",
+                  px: 4,
+                  py: 1.3,
+                  fontWeight: "bold",
+                  background: "linear-gradient(90deg,#6a11cb,#2575fc)",
+                  boxShadow: "0 6px 15px rgba(37,117,252,0.4)",
+                  textTransform: "none",
+                  "&:hover": { transform: "scale(1.05)", transition: "0.3s ease" },
+                }}
+              >
+                📄 Download as PDF
+              </Button>
+            </Box>
+          )}
+        </Box>
+      </Container>
     </Box>
   );
 };
