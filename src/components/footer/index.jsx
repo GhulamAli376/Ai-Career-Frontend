@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(135deg, #0a192f 20%, #112d4e 80%)",
+        background: "linear-gradient(135deg, #1A1A2E, #16213E, #533483)",
         color: "#fff",
         py: 6,
       }}
@@ -19,15 +19,12 @@ const Footer = () => {
               variant="h5"
               fontWeight="bold"
               gutterBottom
-              sx={{
-                background: "linear-gradient(90deg, #00c6ff, #0072ff)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
+             
             >
-              CareerAI
+              Career <span style={{ color: "#ffeb3b" }}>Scope</span>
             </Typography>
-            <Typography variant="body2" sx={{ color: "#cfd8dc", lineHeight: 1.8 }}>
+            <Typography variant="body2" width={"70%"}
+            sx={{ color: "#cfd8dc", lineHeight: 1.8 }}>
               Your personal AI-powered career guide — helping you choose, grow,
               and succeed in your professional journey.
             </Typography>
@@ -87,7 +84,7 @@ const Footer = () => {
 
         {/* Bottom Text */}
         <Typography variant="body2" align="center" sx={{ color: "#b0bec5" }}>
-          © {new Date().getFullYear()} CareerAI. All rights reserved.
+          © {new Date().getFullYear()} CareerScope. All rights reserved.
         </Typography>
       </Container>
     </Box>

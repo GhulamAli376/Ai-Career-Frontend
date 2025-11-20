@@ -9,7 +9,6 @@ import { ToastContainer } from 'react-toastify'
 import Login from './pages/auth/login'
 import Signup from './pages/auth/signup'
 import OtpVerification from './pages/auth/otp'
-import Dashboard from './pages/dashboard/dashboard'
 
 function App() {
  
@@ -52,12 +51,7 @@ function App() {
               <Result/>
           }
         />
-        <Route
-          path="/dashboard"
-          element={
-              <Dashboard/>
-          }
-        />
+        
               </Routes>
     </>
   )

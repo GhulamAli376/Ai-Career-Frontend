@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { TextField, Button, Typography, Box, Paper } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Paper,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Lottie from "lottie-react";
 import loginAnim from "../../../assets/Typing Animation.json";
 import { BASE_URL } from "../../../utilis";
@@ -10,6 +18,10 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const Login = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // for screens < 600px
+  const isTablet = useMediaQuery(theme.breakpoints.down("md")); // for screens < 900px
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,13 +35,11 @@ const Login = () => {
         password,
       });
       if (!response.data.status) throw new Error(response.data.message);
-console.log("response",response.data.data)
-delete response.data.data.password;
 
-Cookies.set("userData", JSON.stringify(response.data.data));
-
-
+      delete response.data.data.password;
+      Cookies.set("userData", JSON.stringify(response.data.data));
       Cookies.set("token", response.data.token);
+
       toast.success("Login successful!");
       navigate("/");
     } catch (error) {
@@ -46,6 +56,8 @@ Cookies.set("userData", JSON.stringify(response.data.data));
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        p: isMobile ? 1 : 2, 
+        overflow: "hidden",
         background: "linear-gradient(135deg, #1A1A2E, #16213E, #533483)",
       }}
     >
@@ -53,62 +65,77 @@ Cookies.set("userData", JSON.stringify(response.data.data));
         elevation={6}
         sx={{
           display: "flex",
-          borderRadius: 4,
-          overflow: "hidden",
-          width: "80%",
+          flexDirection: isMobile ? "column" : "row",
+          width: isMobile ? "100%" : isTablet ? "90%" : "80%",
           maxWidth: 900,
+          height: isMobile ? "97vh" : "auto",
+          borderRadius: 4,
           backdropFilter: "blur(10px)",
           background: "rgba(255, 255, 255, 0.15)",
           color: "white",
         }}
       >
         {/* Left Animation */}
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "rgba(255, 255, 255, 0.05)",
-          }}
-        >
-          <Lottie animationData={loginAnim} 
-          style={{ width: 350, height: 350 }} />
-        </Box>
+        {(
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              p: 2,
+            }}
+          >
+           <Lottie
+  animationData={loginAnim}
+  style={{
+    width: isMobile ? "70%" : isTablet ? "80%" : "90%",   // Mobile -> choti, Tablet -> normal, Laptop -> badi
+    maxWidth: isMobile ? 220 : isTablet ? 350 : 450,      // Max width responsive
+  }}
+/>
+
+          </Box>
+        )}
 
         {/* Right Form */}
         <Box
           sx={{
             flex: 1,
-            p: 5,
+            p: isMobile ? 2 : 5,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
           }}
         >
-          <Typography variant="h4" fontWeight={600} mb={2} textAlign={"center"}>
+          <Typography
+            variant={isMobile ? "h6" : "h4"}
+            fontWeight={600}
+            mb={2}
+            textAlign="center"
+          >
             Welcome Back
           </Typography>
-          <Typography variant="body1" mb={3} textAlign={"center"}>
+          <Typography variant="body1" mb={3} textAlign="center">
             Login to your AI Career account
           </Typography>
 
           <TextField
             label="Email"
-            variant="outlined"
             fullWidth
             value={email}
+            variant="outlined"
             onChange={(e) => setEmail(e.target.value)}
             sx={{ mb: 2 }}
             InputProps={{ style: { color: "white" } }}
             InputLabelProps={{ style: { color: "#ddd" } }}
           />
+
           <TextField
             label="Password"
             type="password"
-            variant="outlined"
             fullWidth
             value={password}
+            variant="outlined"
             onChange={(e) => setPassword(e.target.value)}
             sx={{ mb: 3 }}
             InputProps={{ style: { color: "white" } }}

@@ -54,13 +54,11 @@ const [openLoginDialog, setOpenLoginDialog] = useState(false);
           fontWeight="bold"
           sx={{
             mb: 2,
-            background: "linear-gradient(90deg, #6f86d6, #48c6ef)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            textShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            color: "#6f86d6", 
+            
           }}
         >
-          Your AI Career Companion 🚀
+          Your AI Career Companion 😉
         </Typography>
 
         <Typography
@@ -84,7 +82,9 @@ const [openLoginDialog, setOpenLoginDialog] = useState(false);
               py: 1.5,
               fontWeight: "bold",
               fontSize: "1rem",
-              background: "linear-gradient(90deg, #6f86d6, #48c6ef)",
+              background: "#533483",
+              
+            color: "white", 
               boxShadow: "0 6px 15px rgba(72,198,239,0.4)",
               "&:hover": {
                 transform: "scale(1.05)",
@@ -124,22 +124,9 @@ const [openLoginDialog, setOpenLoginDialog] = useState(false);
       </motion.div>
 
       {/* Right Animation */}
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.2 }}
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          background: "linear-gradient(180deg, #e3f2fd, #ffffff)",
-          borderRadius: 4,
-          padding: 2,
-          boxShadow: "0 15px 40px rgba(0,0,0,0.1)",
-        }}
-      >
+      
         <Lottie animationData={aiThinking} loop style={{ width: "80%", maxWidth: 450 }} />
-      </motion.div>
+      
     </Box>
   </Container>
 

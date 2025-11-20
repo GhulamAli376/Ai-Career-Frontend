@@ -35,11 +35,11 @@ export default function Navbar() {
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Typography
-          variant="h6"
+          variant="h5"
           sx={{ fontWeight: "bold", letterSpacing: 1, cursor: "pointer" }}
           onClick={() => navigate("/")}
         >
-          Career<span style={{ color: "#ffeb3b" }}>AI</span>
+          Career <span style={{ color: "#ffeb3b" }}>Scope</span>
         </Typography>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -87,13 +87,6 @@ export default function Navbar() {
             Careers
           </Button>
 
-          <Button
-            color="inherit"
-            onClick={() => navigate("/dashboard")}
-            sx={{ textTransform: "none", fontWeight: "500" }}
-          >
-            Dashboard
-          </Button>
               <IconButton
                 size="large"
                 edge="end"
