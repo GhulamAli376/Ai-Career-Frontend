@@ -39,7 +39,7 @@ export default function Navbar() {
           sx={{ fontWeight: "bold", letterSpacing: 1, cursor: "pointer" }}
           onClick={() => navigate("/")}
         >
-          Career <span style={{ color: "#ffeb3b" }}>Scope</span>
+          Career <span style={{ color: "#ffeb3b" }}>Scopes</span>
         </Typography>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
