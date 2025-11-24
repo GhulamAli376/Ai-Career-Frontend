@@ -42,6 +42,7 @@ const Result = () => {
       });
 
       const data = await response.json();
+console.log("API returned:", data);
       setAiResponse(data.roadmap || "⚠️ No roadmap generated. Try again.");
     } catch (error) {
       console.error("AI Error:", error);
@@ -164,7 +165,12 @@ const Result = () => {
           )}
 
           {/* ROADMAP DISPLAY */}
-          {aiResponse && formatRoadmap(aiResponse)}
+          {aiResponse && (
+  <div id="roadmap-content">
+    {formatRoadmap(aiResponse)}
+  </div>
+)}
+
 
           {/* DOWNLOAD BUTTON */}
           {aiResponse && (
